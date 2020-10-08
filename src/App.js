@@ -1,26 +1,47 @@
 import React from 'react';
-import logo from './logo.svg';
+import CardsContainer from './Components/CardsContainer'
+import SearchCharacterForm from './Components/SearchCharacterForm'
 import './App.css';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+class App extends React.Component {
+  
+  state = {
+    allCharacters: [],
+    selectedCharacters: [],
+    inputValue: ""
+  }
+
+  componentDidMount(){
+    fetch('https://rickandmortyapi.com/api/character')
+      .then(response => response.json())
+      .then(data => {
+        this.setState({ allCharacters: data.results })
+        this.setState({ selectedCharacters: data.results })
+      })
+  }
+
+  filterCharacters = (event) => {
+    const input = event.target.value
+    const filteredCharacters = this.state.allCharacters
+      .filter(character => (
+        character.name
+          .toLowerCase()
+          .includes(input.toLowerCase())  
+        )
+      )
+    this.setState({ selectedCharacters: filteredCharacters })
+  }
+  
+  render(){
+    const { selectedCharacters } = this.state
+    return (
+      <div className="App">
+        <h1>HOLA MORTY</h1>
+        <SearchCharacterForm filterCharacters={this.filterCharacters}/>
+        <CardsContainer characters={selectedCharacters}/>
+      </div>
+    );
+  }
 }
 
 export default App;

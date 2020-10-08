@@ -12,6 +12,24 @@
     animation: App-logo-spin infinite 20s linear;
   }
 }
+#cards-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.card {
+  margin: 10px;
+  width: 160px;
+  box-shadow: 0 12px 12px -6px grey;
+  border-radius: 8px;
+  border: solid rgb(220, 220, 220) .5px;
+}
+
+img {
+  width: 150px;
+  margin: 5px
+}
 
 .App-header {
   background-color: #282c34;
